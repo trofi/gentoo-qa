@@ -11,8 +11,9 @@ shopt -s nullglob
 
 for c in $(< "$tree_root/profiles/categories"); do
     for pkg in "$tree_root"/$c/*; do
-        is_empty() { [[ -z $@ ]]; }
-        [[ $pkg != */CVS ]] && [[ $pkg != */metadata.xml ]] &&
-        is_empty $pkg/*.ebuild && echo "${pkg#${tree_root}/}"
+        len() { echo ${#@}; }
+        [[ $pkg != */CVS ]] &&
+        [[ $pkg != */metadata.xml ]] &&
+            echo "$(len "${pkg}"/*.ebuild) ${pkg#${tree_root}/}"
     done
-done
+done | sort -r -n -k1
