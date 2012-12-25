@@ -12,7 +12,7 @@ while read e; do
 
     while read l
     do
-        if [[ $l == *'SRC_URI="http://hackage.haskell.org'* ]]; then
+        if [[ $l == *'SRC_URI'*'http://hackage.haskell.org'* ]]; then
             check_src_uri "$e"
             break
         fi
