@@ -16,4 +16,4 @@ for c in $(< "$tree_root/profiles/categories"); do
         [[ $pkg != */metadata.xml ]] &&
             echo "$(len "${pkg}"/*.ebuild) ${pkg#${tree_root}/}"
     done
-done | sort -r -n -k1
+done | sort -r -n -k1 | grep -v '^1 '
