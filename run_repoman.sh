@@ -1,3 +1,3 @@
-#!/bin/sh
+#!/bin/bash
 
-repoman full -d > repoman-QA-`date +%F-%T`.log
+${PYTHON:-python} "$(type -p repoman)" full -d > repoman-QA-`date +%F-%T`.log
