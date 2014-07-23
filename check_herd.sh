@@ -13,7 +13,7 @@ do
             herd=${herd#*<herd>}
             herd=${herd%</herd>*}
             mail_string="<email>${herd}@gentoo.org</email>"
-            fgrep "${mail_string}" "$e"
+            fgrep -H "${mail_string}" "$e"
         fi
     done < "$e"
 done
