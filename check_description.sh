@@ -7,6 +7,7 @@ do
         # 20 ebuilds have "etc."
         # http://git.overlays.gentoo.org/gitweb/?p=proj/portage.git;a=commitdiff;h=bbb34efebd0bfc0b231073d00b863b3e3ebd918a
         [[ $l == 'DESCRIPTION='*'etc."' ]] && continue
+        [[ $l == 'DESCRIPTION='*'.."' ]] && continue
 
         if [[ $l == 'DESCRIPTION='*'."' ]]; then
             echo "$e: fixing '.' in description"
