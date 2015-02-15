@@ -3,7 +3,7 @@
 # script to get list of not-installed-yet packages
 # from specified overlay
 
-overlay_name=${1-gentoo-haskell}
+overlay_name=${1-haskell}
 {
   # get all packages
   eix --only-names             --in-overlay ${overlay_name}
