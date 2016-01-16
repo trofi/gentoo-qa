@@ -18,6 +18,8 @@ do
     while read l
     do
         [[ $l == *"HOMEPAGE="*"http://github.com/"* ]] && homepage=$l
+        [[ $l == *"HOMEPAGE="*"http://www.github.com/"* ]] && homepage=$l
+        [[ $l == *"HOMEPAGE="*"http://bitbucket.org/"* ]] && homepage=$l
 
         if [[ -n $homepage ]]; then
             check_homepage "$homepage"
