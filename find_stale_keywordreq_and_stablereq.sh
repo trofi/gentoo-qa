@@ -76,18 +76,19 @@ refresh_lists() {
 }
 
 check_keyword_presence() {
-    local package=$1 keyword=$2 kw
-    for kw in $(portageq metadata / ebuild ${package} KEYWORDS); do
+    local package=$1 keyword=$2 kw keywords
+    keywords=$(portageq metadata / ebuild ${package} KEYWORDS)
+    if [[ $? -ne 0 ]]; then
+        echo "BAD"
+        return
+    fi
+    for kw in ${keywords}; do
         if [[ ${keyword} == ${kw} ]]; then
             # keyword is already present
             echo "PRESENT"
             return
         fi
     done
-    if [[ $? -ne 0 ]]; then
-        echo "BAD"
-        return
-    fi
     echo "MISSING"
 }
 
@@ -124,7 +125,10 @@ find_stale_bugs_for_keyword() {
                         # ignore already done item
                         ;;
                     *)
-                        warn "missing ebuilds as bug=${bug}"
+                        # this bug also has work to do but needs tweaks
+                        # in package list
+                        stale_bug=no
+                        warn "missing packages in bug=${bug}"
                         ;;
                 esac
                 ;;
