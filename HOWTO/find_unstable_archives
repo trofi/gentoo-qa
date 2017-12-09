@@ -1,0 +1,9 @@
+This file is a simple spelunker first done in:
+   https://archives.gentoo.org/gentoo-dev/message/321135f6d6a47beff3ecd2e16a28b896
+
+TL;DR: (TODO: drop assumptions about current directories)
+
+$ egrep -R 'SRC_URI.*github.com' metadata/ | grep -o '[^/ ]*$' | sort -u > github_distfiles.list
+$ git grep -l -F -f ./github_distfiles.list | grep -F /Manifest | xargs rm -v
+$ mkdir /tmp/fresh
+$ GENTOO_MIRRORS= DISTDIR=/tmp/fresh repoman manifest
