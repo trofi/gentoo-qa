@@ -61,7 +61,7 @@ while read l; do
     (
         cd ${cat}/${pn}
         #repoman commit --include-arches=${arch} -m "${cat}/${pn}: ${arch} stable, bug #${bug}" || echo FAILED
-        #run repoman commit -d -e y --include-arches="${kws_no_tilde}" --quiet -m "${cat}/${pn}: ${action} ${pv} for ${arch}, bug #${bug}${credit}" || echo FAILED
-        run repoman commit -d --include-arches="${kws_no_tilde}" --quiet -m "${cat}/${pn}: ${action} ${pv} for ${arch}, bug #${bug}${credit}" || echo FAILED
+        run repoman commit -d -e y --include-arches="${kws_no_tilde}" --quiet -m "${cat}/${pn}: ${action} ${pv} for ${arch}, bug #${bug}${credit}" || echo FAILED
+        #run repoman commit -d --include-arches="${kws_no_tilde}" --quiet -m "${cat}/${pn}: ${action} ${pv} for ${arch}, bug #${bug}${credit}" || echo FAILED
     )
 done <"${todo_list}"
