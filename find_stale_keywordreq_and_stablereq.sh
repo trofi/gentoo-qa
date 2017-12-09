@@ -4,10 +4,26 @@
 # and outputs which ones are already done.
 
 ARCHES=(
-    ia64
+    # stable
+    alpha
+    amd64
+    arm
     hppa
+    ia64
     ppc
     ppc64
+    x86
+
+    # unstable
+    arm64
+    mips
+
+    # experimental
+    m68k
+    nios2
+    riscv
+    s390
+    sh
     sparc
 )
 
@@ -64,10 +80,15 @@ check_keyword_presence() {
     for kw in $(portageq metadata / ebuild ${package} KEYWORDS); do
         if [[ ${keyword} == ${kw} ]]; then
             # keyword is already present
-            return 0
+            echo "PRESENT"
+            return
         fi
     done
-    return 1
+    if [[ $? -ne 0 ]]; then
+        echo "BAD"
+        return
+    fi
+    echo "MISSING"
 }
 
 find_stale_bugs_for_keyword() {
@@ -94,10 +115,18 @@ find_stale_bugs_for_keyword() {
                 stale_bug=yes
                 ;;
             '='*)
-                if ! check_keyword_presence "${line#=}" "${keyword}"; then
-                    # at least one atom is missing keywords
-                    stale_bug=no
-                fi
+                case "$(check_keyword_presence "${line#=}" "${keyword}")" in
+                    "MISSING")
+                        # at least one keyword is missing. bug is ok
+                        stale_bug=no
+                        ;;
+                    "PRESENT")
+                        # ignore already done item
+                        ;;
+                    *)
+                        warn "missing ebuilds as bug=${bug}"
+                        ;;
+                esac
                 ;;
             '')
                 # '<newline>' is reached
