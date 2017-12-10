@@ -17,6 +17,10 @@ die() {
 
 todo_list=stable-or-kw.list
 
+if [ $# = 1 ]; then
+    todo_list=${1}
+fi
+
 while read l; do
     if [[ $l == "# bug #"* ]]; then
         bug=${l#\# bug \#}
