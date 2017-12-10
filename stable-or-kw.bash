@@ -18,15 +18,15 @@ die() {
 todo_list=stable-or-kw.list
 
 while read l; do
-    if [[ -z $l ]]; then
-        continue
-    fi
     if [[ $l == "# bug #"* ]]; then
         bug=${l#\# bug \#}
         continue
     fi
     if [[ $l == "# credit: "* ]]; then
         credit=" (${l#\# credit: })"
+        continue
+    fi
+    if [[ -z $l || $l = "#"* ]]; then
         continue
     fi
     if [[ $l != "="* ]]; then
