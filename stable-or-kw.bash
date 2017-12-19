@@ -35,6 +35,8 @@ while read l; do
         continue
     fi
     if [[ -z $l ]]; then
+        # bugs are directly attached to atom lists
+        bug=
         continue
     fi
     if [[ $l = "#"* ]]; then
