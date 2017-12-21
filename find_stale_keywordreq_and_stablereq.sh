@@ -88,6 +88,11 @@ check_keyword_presence() {
             echo "PRESENT"
             return
         fi
+        if [[ ${keyword} == ~${kw} ]]; then
+            # ~arch requested, arch is present
+            echo "ALREADY_STABLE"
+            return
+        fi
     done
     echo "MISSING"
 }
@@ -123,6 +128,10 @@ find_stale_bugs_for_keyword() {
                         ;;
                     "PRESENT")
                         # ignore already done item
+                        ;;
+                    "ALREADY_STABLE")
+                        # ignore already done item
+                        warn "KEYWORDREQ for already stable '${line}' in bug=${bug}"
                         ;;
                     *)
                         # this bug also has work to do but needs tweaks
