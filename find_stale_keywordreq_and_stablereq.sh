@@ -131,7 +131,7 @@ find_stale_bugs_for_keyword() {
                         ;;
                     "ALREADY_STABLE")
                         # ignore already done item
-                        warn "KEYWORDREQ for already stable '${line}' in bug=${bug}"
+                        #warn "KEYWORDREQ for already stable '${line}' in bug=${bug}"
                         ;;
                     *)
                         # this bug also has work to do but needs tweaks
