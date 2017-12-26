@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 # The tool grabs stablereq and keywordreq bugs for all architectures
 # and outputs which ones are already done.
@@ -31,12 +31,36 @@ CACHE_DIR=$(pwd)/kw-cache
 STABLE_DIR=${CACHE_DIR}/stablereq
 KEYWORD_DIR=${CACHE_DIR}/keywordreq
 
+# command line tunables
+DEBUG=no
+VERBOSE=no
+REFRESH_LISTS=yes
+
+parse_opts() {
+    for o in "$@"; do
+        case "$o" in
+            --debug=yes)
+                DEBUG=yes
+                ;;
+            --verbose=yes)
+                VERBOSE=yes
+                ;;
+            --refresh-lists=no)
+                REFRESH_LISTS=no
+                ;;
+            *)
+                warn "unknown option '$o'"
+                ;;
+        esac
+    done
+}
+
 debug() {
-    echo "DEBUG: $@" >&2
+    [[ $DEBUG = yes ]] && echo "DEBUG: $@" >&2
 }
 
 info() {
-    echo "INFO: $@" >&2
+    [[ $VERBOSE = yes ]] && echo "INFO: $@" >&2
 }
 
 warn() {
@@ -164,7 +188,9 @@ find_stale_bugs() {
 }
 
 main() {
-    refresh_lists
+    parse_opts "$@"
+
+    [[ $REFRESH_LISTS = yes ]] && refresh_lists
 
     find_stale_bugs
 }
