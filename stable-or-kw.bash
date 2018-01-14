@@ -26,10 +26,17 @@ if [ $# = 1 ]; then
 fi
 
 while read l; do
+    # up to next bug
     if [[ $l == "# bug #"* ]]; then
-        bug=", bug #${l#\# bug \#}"
+        bug_number=${l#\# bug \#}
+        bug=" bug #${bug_number}"
         continue
     fi
+    if [[ $l == "# uncc" ]]; then
+        uncc=yes
+        continue
+    fi
+    # sticky
     if [[ $l == "# credit: "* ]]; then
         credit=" (${l#\# credit: })"
         continue
@@ -37,6 +44,8 @@ while read l; do
     if [[ -z $l ]]; then
         # bugs are directly attached to atom lists
         bug=
+        bug_number=
+        uncc=no
         continue
     fi
     if [[ $l = "#"* ]]; then
@@ -79,9 +88,14 @@ while read l; do
             -d
             -e y
             --include-arches="${kws_no_tilde}"
-            --quiet \
-            -m "${cat}/${pn}: ${action} ${pv} for ${arch}${bug}${credit}"
+            --quiet
+            --commitmsg="${cat}/${pn}: ${action} ${pv} for ${arch}${bug}${credit}"
         )
+        # if bug is marked as "# uncc" let's try to add 'Bug: ' field
+        [[ $uncc == yes ]] && repoman_opts+=(
+            --bug="${bug_number}"
+        )
+
         run repoman commit "${repoman_opts[@]}" || echo FAILED
     )
 done <"${todo_list}"
