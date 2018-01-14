@@ -29,7 +29,7 @@ while read l; do
     # up to next bug
     if [[ $l == "# bug #"* ]]; then
         bug_number=${l#\# bug \#}
-        bug=" bug #${bug_number}"
+        bug=" #${bug_number}"
         continue
     fi
     if [[ $l == "# uncc" ]]; then
