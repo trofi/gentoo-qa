@@ -29,7 +29,6 @@ while read l; do
     # up to next bug
     if [[ $l == "# bug #"* ]]; then
         bug_number=${l#\# bug \#}
-        bug=" #${bug_number}"
         continue
     fi
     if [[ $l == "# uncc" ]]; then
@@ -43,7 +42,6 @@ while read l; do
     fi
     if [[ -z $l ]]; then
         # bugs are directly attached to atom lists
-        bug=
         bug_number=
         uncc=no
         continue
@@ -55,7 +53,7 @@ while read l; do
     if [[ $l != "="* ]]; then
         die "unknown directive: '${l}'"
     fi
-    if [[ -z $bug ]]; then
+    if [[ -z $bug_number ]]; then
         warn "unset bug comment"
     fi
     set -- ${l}
@@ -89,7 +87,7 @@ while read l; do
             -e y
             --include-arches="${kws_no_tilde}"
             --quiet
-            --commitmsg="${cat}/${pn}: ${action} ${pv} for ${arch}${bug}${credit}"
+            --commitmsg="${cat}/${pn}: ${action} ${pv} for ${arch}${credit}"
         )
         # if bug is marked as "# uncc" let's try to add 'Bug: ' field
         [[ $uncc == yes ]] && repoman_opts+=(
