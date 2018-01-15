@@ -82,12 +82,14 @@ while read l; do
     (
         cd ${cat}/${pn}
         # makes it easier to comment out experimentals occasionally
+        # Append ", bug #<number>" if '${bug_number}' exists
+        bug=${bug_number:+, bug #${bug_number}}
         repoman_opts=(
             -d
             -e y
             --include-arches="${kws_no_tilde}"
             --quiet
-            --commitmsg="${cat}/${pn}: ${action} ${pv} for ${arch}${credit}"
+            --commitmsg="${cat}/${pn}: ${action} ${pv} for ${arch}${bug}${credit}"
         )
         # if bug is marked as "# uncc" let's try to add 'Bug: ' field
         [[ $uncc == yes ]] && repoman_opts+=(
