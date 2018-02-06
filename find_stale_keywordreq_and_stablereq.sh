@@ -71,7 +71,7 @@ getatoms() {
     # --no-depends --no-sanity-check
     set -- getatoms.py "$@"
     info "$@"
-    "$@" || warn "getatoms.py failed. Empty output?"
+    "$@" || info "getatoms.py failed. Empty output?"
 }
 
 stable_file() {
