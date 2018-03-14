@@ -52,6 +52,9 @@ parse_opts() {
             --metadata-only=yes)
                 METADATA_ONLY=yes
                 ;;
+            --only-arches=*)
+                ARCHES=( ${o#--only-arches=} )
+                ;;
             *)
                 warn "unknown option '$o'"
                 ;;
