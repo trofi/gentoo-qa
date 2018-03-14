@@ -35,6 +35,7 @@ KEYWORD_DIR=${CACHE_DIR}/keywordreq
 DEBUG=no
 VERBOSE=no
 REFRESH_LISTS=yes
+METADATA_ONLY=no
 
 parse_opts() {
     for o in "$@"; do
@@ -47,6 +48,9 @@ parse_opts() {
                 ;;
             --refresh-lists=no)
                 REFRESH_LISTS=no
+                ;;
+            --metadata-only=yes)
+                METADATA_ONLY=yes
                 ;;
             *)
                 warn "unknown option '$o'"
@@ -99,9 +103,27 @@ refresh_lists() {
     done
 }
 
+REPO_ROOT=$(portageq get_repo_path / gentoo)
+get_keywords() {
+    local package=$1
+
+    if [[ ${METADATA_ONLY} == no ]]; then
+        portageq metadata / ebuild ${package} KEYWORDS
+        return
+    fi
+
+    local l
+    while read l; do
+        if [[ ${l} == "KEYWORDS="* ]]; then
+            echo "${l#KEYWORDS=}"
+            return
+        fi
+    done <"${REPO_ROOT}/metadata/md5-cache/${package}"
+}
+
 check_keyword_presence() {
     local package=$1 keyword=$2 kw keywords
-    keywords=$(portageq metadata / ebuild ${package} KEYWORDS)
+    keywords=$(get_keywords "${package}")
     if [[ $? -ne 0 ]]; then
         echo "BAD"
         return
