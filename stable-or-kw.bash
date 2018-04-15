@@ -31,10 +31,6 @@ while read l; do
         bug_number=${l#\# bug \#}
         continue
     fi
-    if [[ $l == "# uncc" ]]; then
-        uncc=yes
-        continue
-    fi
     # sticky
     if [[ $l == "# credit: "* ]]; then
         credit=${l#\# credit: }
@@ -43,7 +39,6 @@ while read l; do
     if [[ -z $l ]]; then
         # bugs are directly attached to atom lists
         bug_number=
-        uncc=no
         continue
     fi
     if [[ $l = "#"* ]]; then
@@ -98,8 +93,8 @@ EOF
             --quiet
             --commitmsgfile="${commitfile}"
         )
-        # if bug is marked as "# uncc" let's try to add 'Bug: ' field
-        [[ $uncc == yes ]] && repoman_opts+=(
+        # Add 'Bug: ' field if bug number is set
+        [[ -n ${bug_number} ]] && repoman_opts+=(
             --bug="${bug_number}"
         )
 
