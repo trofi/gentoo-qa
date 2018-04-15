@@ -37,7 +37,7 @@ while read l; do
     fi
     # sticky
     if [[ $l == "# credit: "* ]]; then
-        credit=" (${l#\# credit: })"
+        credit=${l#\# credit: }
         continue
     fi
     if [[ -z $l ]]; then
@@ -84,12 +84,19 @@ while read l; do
         # makes it easier to comment out experimentals occasionally
         # Append ", bug #<number>" if '${bug_number}' exists
         bug=${bug_number:+, bug #${bug_number}}
+        commitfile=$(mktemp)
+        cat >"${commitfile}" <<EOF
+${cat}/${pn}: ${action} ${pv} for ${arch}${bug}
+
+${credit:+Tested-by: ${credit}}
+EOF
+
         repoman_opts=(
             -d
             -e y
             --include-arches="${kws_no_tilde}"
             --quiet
-            --commitmsg="${cat}/${pn}: ${action} ${pv} for ${arch}${bug}${credit}"
+            --commitmsgfile="${commitfile}"
         )
         # if bug is marked as "# uncc" let's try to add 'Bug: ' field
         [[ $uncc == yes ]] && repoman_opts+=(
@@ -97,5 +104,6 @@ while read l; do
         )
 
         run repoman commit "${repoman_opts[@]}" || echo FAILED
+        run rm "${commitfile}"
     )
 done <"${todo_list}"
