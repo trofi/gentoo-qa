@@ -30,6 +30,7 @@ ARCHES=(
 CACHE_DIR=$(pwd)/kw-cache
 STABLE_DIR=${CACHE_DIR}/stablereq
 KEYWORD_DIR=${CACHE_DIR}/keywordreq
+EROOT=$(portageq envvar EROOT)
 
 # command line tunables
 DEBUG=no
@@ -106,12 +107,12 @@ refresh_lists() {
     done
 }
 
-REPO_ROOT=$(portageq get_repo_path / gentoo)
+REPO_ROOT=$(portageq get_repo_path "${EROOT}" gentoo)
 get_keywords() {
     local package=$1
 
     if [[ ${METADATA_ONLY} == no ]]; then
-        portageq metadata / ebuild ${package} KEYWORDS
+        portageq metadata "${EROOT}" ebuild ${package} KEYWORDS
         return
     fi
 
