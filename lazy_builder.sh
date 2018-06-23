@@ -21,6 +21,11 @@ if [[ -z ${todo_list} || -z ${output_file} || -z ${logs_dir} ]]; then
     exit 1
 fi
 
+if [[ -d ${logs_dir} ]]; then
+    echo "ERROR: ${logs_dir} must be directory."
+    exit 1
+fi
+
 # Internal state:
 
 bug_number= # number
@@ -64,7 +69,7 @@ while read l; do
     else
         # Do rebuild
         echo "BUILD: ${l}"
-        set -- echo2 emerge -v1 "$l"
+        set -- emerge -v1 "$l"
         echo "$@"
         { "$@" && touch "${logs_file}.PASS" || touch "${logs_file}.FAIL"; } | tee "${logs_file}"
 
