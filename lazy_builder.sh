@@ -21,7 +21,7 @@ if [[ -z ${todo_list} || -z ${output_file} || -z ${logs_dir} ]]; then
     exit 1
 fi
 
-if [[ -d ${logs_dir} ]]; then
+if [[ ! -d ${logs_dir} ]]; then
     echo "ERROR: ${logs_dir} must be directory."
     exit 1
 fi
