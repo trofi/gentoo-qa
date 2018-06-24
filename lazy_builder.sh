@@ -55,7 +55,8 @@ while read l; do
         continue
     fi
 
-    logs_file="${logs_dir}/${l//\//_dash_}"
+    # foo/bar -> foo:bar
+    logs_file="${logs_dir}/${l//\//:}"
     if [[ -f ${logs_file} ]]; then
         echo -n "SKIP: ${l}: "
         if [[ -f "${logs_file}.PASS" ]]; then
