@@ -72,7 +72,7 @@ while read l; do
         echo "BUILD: ${l}"
         set -- emerge -v1 "$l"
         echo "$@"
-        { "$@" && touch "${logs_file}.PASS" || touch "${logs_file}.FAIL"; } | tee "${logs_file}"
+        { "$@" && touch "${logs_file}.PASS" || touch "${logs_file}.FAIL"; } 2>&1 | tee "${logs_file}"
 
         if [[ -f "${logs_file}.PASS" ]]; then
             emit "$l" >> "${output_file}"
