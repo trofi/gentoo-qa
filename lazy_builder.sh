@@ -1,10 +1,11 @@
 #!/bin/bash
 
-# This too accepts file in 'getatoms.py' format
-# and addempts to build each package with default options.
+# This too accepts '<todo_list>' file in 'getatoms.py' format
+# and attempts to build each package with default emerge options.
 #
-# Build logs are piped into the log dirs.
-# Results are piped into results file and look like filtered input
+# Build logs are piped into the '<logs_dir>' log dirs.
+# Results are piped into '<output_file>' file and look like
+# filtered input (to be used by 'stable-or-kw.bash' keyworder).
 #
 # The script attempts not to build the same atom twice to
 # ease automatic incremental builds with many failures.
