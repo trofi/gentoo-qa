@@ -41,6 +41,8 @@ emit() {
     printf "%s\n" "${l}"
 }
 
+# Always regenerate file based on current TODO list
+: > "${output_file}"
 while read l; do
     # up to next bug
     if [[ $l == "# bug #"* ]]; then
@@ -62,6 +64,7 @@ while read l; do
         echo -n "SKIP: ${l}: "
         if [[ -f "${logs_file}.PASS" ]]; then
             echo "already PASS"
+            emit "$l" >> "${output_file}"
         elif [[ -f "${logs_file}.FAIL" ]]; then
             echo "already FAIL"
         else
