@@ -109,11 +109,17 @@ refresh_lists() {
 
 REPO_ROOT=$(portageq get_repo_path "${EROOT}" gentoo)
 get_keywords() {
-    local package=$1
+    local package=$1 metadata_file=${REPO_ROOT}/metadata/md5-cache/${package}
 
     if [[ ${METADATA_ONLY} == no ]]; then
         portageq metadata "${EROOT}" ebuild ${package} KEYWORDS
         return
+    fi
+
+    # No file
+    if [[ ! -f ${metadata_file} ]]; then
+        echo "no package '${package}'"
+        return 1
     fi
 
     local l
@@ -122,14 +128,14 @@ get_keywords() {
             echo "${l#KEYWORDS=}"
             return
         fi
-    done <"${REPO_ROOT}/metadata/md5-cache/${package}"
+    done <"${metadata_file}"
 }
 
 check_keyword_presence() {
     local package=$1 keyword=$2 kw keywords
     keywords=$(get_keywords "${package}")
     if [[ $? -ne 0 ]]; then
-        echo "BAD"
+        echo "BAD: ${keywords}"
         return
     fi
     for kw in ${keywords}; do
@@ -171,7 +177,8 @@ find_stale_bugs_for_keyword() {
                 stale_bug=yes
                 ;;
             '='*)
-                case "$(check_keyword_presence "${line#=}" "${keyword}")" in
+                local keyword_presence="$(check_keyword_presence "${line#=}" "${keyword}")"
+                case "${keyword_presence}" in
                     "MISSING")
                         # at least one keyword is missing. bug is ok
                         stale_bug=no
@@ -187,7 +194,7 @@ find_stale_bugs_for_keyword() {
                         # this bug also has work to do but needs tweaks
                         # in package list
                         stale_bug=no
-                        warn "missing packages in bug=${bug}"
+                        warn "BUG: bug=${bug} ${keyword_presence}"
                         ;;
                 esac
                 ;;
