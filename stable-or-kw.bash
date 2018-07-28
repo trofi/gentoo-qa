@@ -93,10 +93,6 @@ EOF
             --quiet
             --commitmsgfile="${commitfile}"
         )
-        # Add 'Bug: ' field if bug number is set
-        [[ -n ${bug_number} ]] && repoman_opts+=(
-            --bug="${bug_number}"
-        )
 
         run repoman commit "${repoman_opts[@]}" || echo FAILED
         run rm "${commitfile}"
