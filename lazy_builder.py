@@ -126,7 +126,7 @@ class Executor:
         """Run emerge and store result into places."""
 
         print(atom + ': BUILDING')
-        os.system('( emerge -pv1 {atom} && touch {pass_marker}; ) 2>&1 | tee {emerge_log}'.format(
+        os.system('( emerge -v1 {atom} && touch {pass_marker}; ) 2>&1 | tee {emerge_log}'.format(
             atom        = shlex.quote(atom),
             pass_marker = shlex.quote(pass_marker),
             emerge_log  = shlex.quote(emerge_log),
