@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This too accepts '<todo_list>' file in 'getatoms.py' format
+# This tool accepts '<todo_list>' file in 'getatoms.py' format
 # and attempts to build each package with default emerge options.
 #
 # Build logs are piped into the '<logs_dir>' log dirs.
