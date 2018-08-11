@@ -154,6 +154,9 @@ def main():
     with open(args.input_atoms, 'r') as i:
         with open(args.output_atoms, 'w') as o:
             for task_spec in i.read().strip().split('\n\n'):
+                # empty file or many newlines
+                if len(task_spec) == 0:
+                    continue
                 task = Task(task_spec)
                 result = executor.run(task)
                 if result == Executor.Result.PASS:
