@@ -171,7 +171,7 @@ def delete_unexpected_logs(logs_dir, expected_files):
         actual_files.add(fp)
 
     for fp in (actual_files - expected_files):
-        print("REMOVE: '%s'\n" % fp)
+        print("REMOVE: '%s'" % fp)
         os.remove(fp)
 
 def main():
