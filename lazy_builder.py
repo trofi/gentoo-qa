@@ -147,10 +147,13 @@ class Executor:
         """Run emerge and store result into places."""
 
         print(atom + ': BUILDING')
-        os.system('( emerge -v1 {atom} && touch {pass_marker}; ) 2>&1 | tee {emerge_log}'.format(
-            atom        = shlex.quote(atom),
-            pass_marker = shlex.quote(pass_marker),
-            emerge_log  = shlex.quote(emerge_log),
+        os.system('( {install_deps_only} && emerge -v1 {atom} && touch {pass_marker}; ) 2>&1 | tee {emerge_log}'.format(
+            install_deps_only = 'FEATURES="$FEATURES -test" USE="$USE -test" emerge -v1 {atom} --onlydeps --with-test-deps'.format(
+                                    atom = shlex.quote(atom),
+                                )
+            atom              = shlex.quote(atom),
+            pass_marker       = shlex.quote(pass_marker),
+            emerge_log        = shlex.quote(emerge_log),
         ))
 
         if os.path.exists(pass_marker):
