@@ -41,6 +41,8 @@ class Spec:
          '# bug #123' -> 123
         """
         m = re.match('^# bug #(\d+)$', bug_spec.strip())
+        if not m:
+            raise ValueError("Failed to extract bug number from '%s'" % bug_spec)
         return int(m.group(1))
 
     def get_atom(atom_spec):
@@ -67,6 +69,8 @@ class Task:
               =bar
         """
         bug_string, *atoms = task_spec.split('\n')
+        if not atoms:
+            raise ValueError("No atoms in '%s' task" % bug_string)
         self.bug_number = Spec.get_bug(bug_string)
         self.atoms = [Spec.get_atom(atom_spec) for atom_spec in atoms]
 
