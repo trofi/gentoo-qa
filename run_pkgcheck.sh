@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# checks for keywords mismatch preewide with pkgcheck
+# checks for keywords mismatch treewide with pkgcheck
 # I run it as:
 #    ./run_pkgcheck.sh --glsa-dir=${HOME}/portage/glsa --arches=-x64-macos
 # Or for specific arch as:
