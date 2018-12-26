@@ -7,27 +7,26 @@
 #    ./run_pkgcheck.sh --glsa-dir=${HOME}/portage/glsa --arches=sparc --profiles=default/linux/sparc/17.0
 
 # Not too critical for now. I'd like to keep only arch-specific warnings.
-DISABLED_CHECKS=(
-    DeprecatedEclassReport
-    PkgEAPIReport
-    StaleUnstableReport
-    RedundantVersionReport
-    UnstableOnlyReport
-    ImlateReport
-    GlobalUSECheck
-    LocalUSECheck
-    DescriptionReport
-    HttpsAvailableCheck
-    WhitespaceCheck
-    KeywordsReport
-    MissingSlotDepReport
-    AbsoluteSymlinkCheck
-    BadInsIntoCheck
-    PathVariablesCheck
-    RequiredUSEMetadataReport
-    DependencyReport
-    PkgDirReport
-    TreeVulnerabilitiesReport
+DISABLED_KEYWORDS=(
+    # up to maintainer to fix, not arch team
+    AbsoluteSymlink
+    BadInsIntoDir
+    DeprecatedEAPI
+    DeprecatedEclass
+    DuplicateFiles
+    ExecutableFile
+    HttpsAvailable
+    MissingRevision
+    MissingSlash
+    MissingSlotDep
+    ProbableGlobalUSE
+    ProbableUSE_EXPAND
+    RedundantVersion
+    RequiredUseDefaults
+    StaleUnstable
+    UnnecessarySlashStrip
+    UnsortedKeywords
+    UnstableOnly
 )
 
 # Deprecated and problematic profiles.
@@ -63,11 +62,11 @@ DISABLED_PROFILES=(
 )
 
 # -foo,-bar
-checks=${DISABLED_CHECKS[@]/#/-}
-checks=${checks// /,}
+keywords=${DISABLED_KEYWORDS[@]/#/-}
+keywords=${keywords// /,}
 
 # -foo,-bar
 profiles=${DISABLED_PROFILES[@]/#/-}
 profiles=${profiles// /,}
 
-pkgcheck --checks="${checks}" --profiles=${profiles} "$@"
+pkgcheck --keywords="${keywords}" --profiles=${profiles} "$@"
