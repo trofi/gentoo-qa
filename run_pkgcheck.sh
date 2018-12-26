@@ -20,6 +20,7 @@ DISABLED_KEYWORDS=(
     MissingSlash
     MissingSlotDep
     MissingUseDepDefault
+    NonExistentDeps
     ProbableGlobalUSE
     ProbableUSE_EXPAND
     RedundantVersion
