@@ -11,11 +11,13 @@ DISABLED_KEYWORDS=(
     # up to maintainer to fix, not arch team
     AbsoluteSymlink
     BadInsIntoDir
+    BadDescription
     DeprecatedEAPI
     DeprecatedEclass
     DuplicateFiles
     ExecutableFile
     HttpsAvailable
+    MatchingGlobalUSE
     MissingRevision
     MissingSlash
     MissingSlotDep
