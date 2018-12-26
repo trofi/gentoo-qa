@@ -19,14 +19,18 @@ DISABLED_KEYWORDS=(
     MissingRevision
     MissingSlash
     MissingSlotDep
+    MissingUseDepDefault
     ProbableGlobalUSE
     ProbableUSE_EXPAND
     RedundantVersion
     RequiredUseDefaults
+    SizeViolation
     StaleUnstable
     UnnecessarySlashStrip
     UnsortedKeywords
     UnstableOnly
+    VulnerablePackage
+    WhitespaceFound
 )
 
 # Deprecated and problematic profiles.
