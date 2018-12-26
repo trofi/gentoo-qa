@@ -21,8 +21,11 @@ DISABLED_KEYWORDS=(
     MissingRevision
     MissingSlash
     MissingSlotDep
+    MissingUri
     MissingUseDepDefault
     NonExistentDeps
+    PotentialGlobalUSE
+    PotentialLocalUSE
     ProbableGlobalUSE
     ProbableUSE_EXPAND
     RedundantVersion
@@ -32,6 +35,7 @@ DISABLED_KEYWORDS=(
     UnnecessarySlashStrip
     UnsortedKeywords
     UnstableOnly
+    UnusedLicenses
     VulnerablePackage
     WhitespaceFound
 )
