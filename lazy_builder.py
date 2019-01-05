@@ -151,10 +151,27 @@ class Executor:
         """Run emerge and store result into places."""
 
         print(atom + ': BUILDING')
-        os.system('( {install_deps_only} && emerge -v1 {atom} && touch {pass_marker}; ) 2>&1 | tee {emerge_log}'.format(
-            install_deps_only = 'FEATURES="$FEATURES -test" USE="$USE -test" emerge -v1 {atom} --onlydeps --with-test-deps'.format(
-                                    atom = shlex.quote(atom),
+        emerge_opts=' '.join([
+            '--verbose',
+            '--oneshot',
+            # Complicated updates like dev-lang/perl get a wrong
+            # route sometimes. Disabling autounmask makes error
+            # messages clearer and even change resolution failure
+            # to success.
+            '--autounmask=n',
+        ])
+        # ask emerge to install atom dependencies only
+        emerge_prereq_opts=' '.join([
+            '--onlydeps',
+            '--with-test-deps',
+        ])
+        os.system('( {install_deps_only} && emerge {emerge_opts} {atom} && touch {pass_marker}; ) 2>&1 | tee {emerge_log}'.format(
+            install_deps_only = 'FEATURES="$FEATURES -test" USE="$USE -test" emerge {emerge_opts} {atom} {emerge_prereq_opts}'.format(
+                                    emerge_opts        = emerge_opts,
+                                    atom               = shlex.quote(atom),
+                                    emerge_prereq_opts = emerge_prereq_opts,
                                 ),
+            emerge_opts       = emerge_opts,
             atom              = shlex.quote(atom),
             pass_marker       = shlex.quote(pass_marker),
             emerge_log        = shlex.quote(emerge_log),
