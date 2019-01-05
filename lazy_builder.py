@@ -152,13 +152,14 @@ class Executor:
 
         print(atom + ': BUILDING')
         emerge_opts=' '.join([
-            '--verbose',
-            '--oneshot',
             # Complicated updates like dev-lang/perl get a wrong
             # route sometimes. Disabling autounmask makes error
             # messages clearer and even change resolution failure
             # to success.
             '--autounmask=n',
+            '--oneshot',
+            '--verbose',
+            '--verbose-conflicts',
         ])
         # ask emerge to install atom dependencies only
         emerge_prereq_opts=' '.join([
