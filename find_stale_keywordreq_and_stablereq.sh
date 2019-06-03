@@ -102,9 +102,10 @@ refresh_lists() {
 
     local arch
     for arch in "${ARCHES[@]}"; do
-        getatoms --arch "${arch}" --stablereq  --all-bugs > "$(stable_file "${arch}")"
-        getatoms --arch "${arch}" --keywordreq --all-bugs > "$(keywords_file "${arch}")"
+        getatoms --arch "${arch}" --stablereq  --all-bugs > "$(stable_file "${arch}")" &
+        getatoms --arch "${arch}" --keywordreq --all-bugs > "$(keywords_file "${arch}")" &
     done
+    wait
 }
 
 REPO_ROOT=$(portageq get_repo_path "${EROOT}" gentoo)
