@@ -37,6 +37,7 @@ DEBUG=no
 VERBOSE=no
 REFRESH_LISTS=yes
 METADATA_ONLY=no
+EXTRA_GETATOM_PARAMS=
 
 parse_opts() {
     for o in "$@"; do
@@ -55,6 +56,9 @@ parse_opts() {
                 ;;
             --only-arches=*)
                 ARCHES=( ${o#--only-arches=} )
+                ;;
+            --getatom-params=*)
+                EXTRA_GETATOM_PARAMS=( ${o#--getatom-params=} )
                 ;;
             *)
                 warn "unknown option '$o'"
@@ -77,7 +81,7 @@ warn() {
 
 getatoms() {
     # --no-depends --no-sanity-check
-    set -- getatoms.py "$@"
+    set -- getatoms.py ${EXTRA_GETATOM_PARAMS} "$@"
     info "$@"
     "$@" || info "getatoms.py failed. Empty output?"
 }
