@@ -1,5 +1,8 @@
 #!/bin/bash
 
+: ${PROJECTS:=}
+: ${REPO:=gentoo}
+
 # Grab project list from:
 #     https://wiki.gentoo.org/wiki/User:Slyfox
 emails=(
@@ -24,6 +27,8 @@ emails=(
     council
 )
 
+[[ -n ${PROJECTS} ]] && emails=( ${PROJECTS} )
+
 IFS=,
 # (foo bar) -> "foo@bentoo.org,bar@gentoo.org"
-portageq --maintainer-email="${emails[*]/%/@gentoo.org}" --repo=gentoo | awk '{ print "="$0 }' | xargs --no-run-if-empty pkgcheck scan --repo=gentoo
+portageq --maintainer-email="${emails[*]/%/@gentoo.org}" --repo=${REPO} | awk '{ print "="$0 }' | xargs --no-run-if-empty pkgcheck scan --repo=gentoo
