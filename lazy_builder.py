@@ -17,8 +17,6 @@
 # $ echo -e '# bug #42\n=foo/bar-1' > i
 # $ mkdir -p l
 # $ ./lazy_builder.py i o l
-# $ echo -e '# bug #42\n=foo/baz-1' > i
-# $ ./lazy_builder.py i o l
 
 import argparse
 import enum
@@ -150,7 +148,6 @@ class Executor:
     def _emerge_uncached(atom, emerge_log, pass_marker, fail_marker):
         """Run emerge and store result into places."""
 
-        print(atom + ': BUILDING')
         emerge_opts=' '.join([
             # Complicated updates like dev-lang/perl get a wrong
             # route sometimes. Disabling autounmask makes error
@@ -166,14 +163,55 @@ class Executor:
             '--onlydeps',
             '--with-test-deps',
         ])
-        os.system('( {install_deps_only} && emerge {emerge_opts} {atom} && touch {pass_marker}; ) 2>&1 | tee {emerge_log}'.format(
-            install_deps_only = 'FEATURES="$FEATURES -test" USE="$USE -test" emerge {emerge_opts} {atom} {emerge_prereq_opts}'.format(
-                                    emerge_opts        = emerge_opts,
-                                    atom               = shlex.quote(atom),
-                                    emerge_prereq_opts = emerge_prereq_opts,
-                                ),
+
+        install_deps_only = 'FEATURES="$FEATURES -test" USE="$USE -test" emerge {emerge_opts} {atom} {emerge_prereq_opts}'.format(
+            emerge_opts        = emerge_opts,
+            atom               = shlex.quote(atom),
+            emerge_prereq_opts = emerge_prereq_opts,
+        )
+        install_atom = 'emerge {emerge_opts} {atom}'.format(
             emerge_opts       = emerge_opts,
             atom              = shlex.quote(atom),
+        )
+
+        # Check dependencies first. If they are not satisfiable then
+        # maybe ebuilds are not on the mirrors yet. Or maybe USE flag
+        # tweaks are needed on emerge side.
+        # 1. pretend depends (errors don't cache)
+        # 2. install depends (errors cache)
+        # 3. pretend atom    (errors don't cache)
+        # 4. build atom      (errors cache)
+
+        print(atom + ': PRETENDING DEPS')
+        if os.system(install_deps_only + ' --pretend'):
+            print(atom + ': PRETEND-DEPS-FAIL')
+            return Executor.Result.FAIL
+
+        print(atom + ': BUILDING DEPS')
+        os.system('( {install_deps_only} && touch {pass_marker}; ) 2>&1 | tee {emerge_log}'.format(
+            install_deps_only = install_deps_only,
+            pass_marker       = shlex.quote(pass_marker),
+            emerge_log        = shlex.quote(emerge_log),
+        ))
+
+        if not os.path.exists(pass_marker):
+            # dep building failed
+            os.rename(emerge_log, fail_marker)
+            print(atom + ': FAIL')
+            return Executor.Result.FAIL
+
+        # deps installed successfully
+        os.remove(emerge_log, pass_marker)
+
+        # Check atom's deps now.
+        print(atom + ': PRETENDING ATOM')
+        if os.system(install_atom + ' --pretend'):
+            print(atom + ': PRETEND-ATOM-FAIL')
+            return Executor.Result.FAIL
+
+        print(atom + ': BUILDING ATOM')
+        os.system('( {install_atom} && touch {pass_marker}; ) 2>&1 | tee {emerge_log}'.format(
+            install_atom      = install_atom,
             pass_marker       = shlex.quote(pass_marker),
             emerge_log        = shlex.quote(emerge_log),
         ))
@@ -183,8 +221,12 @@ class Executor:
             print(atom + ': PASS')
             return Executor.Result.PASS
 
-        os.rename(emerge_log, fail_marker)
-        print(atom + ': FAIL')
+        if os.path.exists(fail_marker):
+            os.rename(emerge_log, fail_marker)
+            print(atom + ': FAIL')
+            return Executor.Result.FAIL
+
+        print(atom + ': BUG: no log markers')
         return Executor.Result.FAIL
 
 def delete_unexpected_logs(logs_dir, expected_files):
