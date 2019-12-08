@@ -201,7 +201,8 @@ class Executor:
             return Executor.Result.FAIL
 
         # deps installed successfully
-        os.remove(emerge_log, pass_marker)
+        os.remove(emerge_log)
+        os.remove(pass_marker)
 
         # Check atom's deps now.
         print(atom + ': PRETENDING ATOM')
