@@ -222,12 +222,8 @@ class Executor:
             print(atom + ': PASS')
             return Executor.Result.PASS
 
-        if os.path.exists(fail_marker):
-            os.rename(emerge_log, fail_marker)
-            print(atom + ': FAIL')
-            return Executor.Result.FAIL
-
-        print(atom + ': BUG: no log markers')
+        os.rename(emerge_log, fail_marker)
+        print(atom + ': FAIL')
         return Executor.Result.FAIL
 
 def delete_unexpected_logs(logs_dir, expected_files):
