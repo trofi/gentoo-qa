@@ -80,4 +80,4 @@ keywords=${keywords// /,}
 profiles=${DISABLED_PROFILES[@]/#/-}
 profiles=${profiles// /,}
 
-pkgcheck --keywords="${keywords}" --profiles=${profiles} "$@"
+pkgcheck scan --keywords="${keywords}" --profiles=${profiles} "$@"
