@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# example usage:
+#   PROJECTS=slyfox ./run_pkgcheck_for_maintained.sh --keywords=StableRequest
+
 : ${PROJECTS:=}
 : ${REPO:=gentoo}
 
@@ -31,4 +34,4 @@ emails=(
 
 IFS=,
 # (foo bar) -> "foo@bentoo.org,bar@gentoo.org"
-portageq --no-regex --no-version --maintainer-email="${emails[*]/%/@gentoo.org}" --repo=${REPO} | xargs --no-run-if-empty pkgcheck scan --repo=gentoo
+portageq --no-regex --no-version --maintainer-email="${emails[*]/%/@gentoo.org}" --repo=${REPO} | xargs --no-run-if-empty pkgcheck scan "$@" --repo=gentoo
