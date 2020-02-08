@@ -31,4 +31,4 @@ emails=(
 
 IFS=,
 # (foo bar) -> "foo@bentoo.org,bar@gentoo.org"
-portageq --maintainer-email="${emails[*]/%/@gentoo.org}" --repo=${REPO} | awk '{ print "="$0 }' | xargs --no-run-if-empty pkgcheck scan --repo=gentoo
+portageq --no-regex --no-version --maintainer-email="${emails[*]/%/@gentoo.org}" --repo=${REPO} | xargs --no-run-if-empty pkgcheck scan --repo=gentoo
