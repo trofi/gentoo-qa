@@ -88,6 +88,7 @@ def main():
 
     for raw_per_package in sys.stdin.read().strip().split('\n\n'):
         [cpn, raw_stable_reqs] = raw_per_package.split('\n', 1)
+        print()
         print(cpn)
         for raw_stable_req in raw_stable_reqs.split('\n'):
             p = Package(cpn, raw_stable_req.strip())
