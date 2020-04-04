@@ -159,7 +159,7 @@ check_keyword_presence() {
 }
 
 find_stale_bugs_for_keyword() {
-    local keyword=$1 kw_file=$2 bug= stale_bug= line=
+    local keyword=$1 kw_file=$2 bug= stale_bug= line= pkg=
 
     # Assume input in form of:
     # '# bug #<number>'
@@ -172,6 +172,7 @@ find_stale_bugs_for_keyword() {
             echo "STALE BUG: bug=${bug} keyword=${keyword}"
         fi
         bug=
+        pkg=
         stale_bug=
     }
 
@@ -182,7 +183,9 @@ find_stale_bugs_for_keyword() {
                 stale_bug=yes
                 ;;
             '='*)
-                local keyword_presence="$(check_keyword_presence "${line#=}" "${keyword}")"
+                pkg=${line#=}
+                pkg=${pkg// *}
+                local keyword_presence="$(check_keyword_presence "${pkg}" "${keyword}")"
                 case "${keyword_presence}" in
                     "MISSING")
                         # at least one keyword is missing. bug is ok
