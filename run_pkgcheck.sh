@@ -12,6 +12,7 @@ DISABLED_KEYWORDS=(
     AbsoluteSymlink
 
     BadDescription
+    BannedEapiCommand
 
     DeprecatedEapi
     DeprecatedEapiCommand
@@ -34,11 +35,13 @@ DISABLED_KEYWORDS=(
     MissingUnpackerDep
     MissingUri
     MissingUseDepDefault
+    MissingVirtualKeywords
 
     NonexistentBlocker
     NonexistentDeps
 
     ObsoleteUri
+    OldGentooCopyright
     OutdatedBlocker
 
     ProbableGlobalUse
