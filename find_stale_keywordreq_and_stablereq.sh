@@ -169,7 +169,7 @@ find_stale_bugs_for_keyword() {
 
     check_and_report_staleness() {
         if [[ ${stale_bug} == yes ]]; then
-            echo "STALE BUG: bug=${bug} keyword=${keyword}"
+            echo "STALE BUG: bug=https://bugs.gentoo.org/${bug} keyword=${keyword}"
         fi
         bug=
         pkg=
