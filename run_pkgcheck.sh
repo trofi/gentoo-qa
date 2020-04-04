@@ -27,6 +27,7 @@ DISABLED_KEYWORDS=(
 
     ExecutableFile
 
+    MatchingChksums
     MissingLicenseRestricts
     MissingPackageRevision
     MissingSlash
@@ -44,6 +45,8 @@ DISABLED_KEYWORDS=(
     OldGentooCopyright
     OutdatedBlocker
 
+    PotentialGlobalUse
+    PotentialLocalUse
     ProbableGlobalUse
 
     RedundantDodir
@@ -59,11 +62,16 @@ DISABLED_KEYWORDS=(
     TarballAvailable
 
     UncheckableDep
+    UnknownProfilePackageUse
+    UnknownProfilePackages
+    UnknownProfileUse
     UnderscoreInUseFlag
     UnnecessarySlashStrip
     UnsortedKeywords
     UnstableOnly
+    UnusedEclasses
     UnusedLicenses
+    UnusedProfileDirs
 
     VulnerablePackage
 
