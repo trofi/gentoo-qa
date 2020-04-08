@@ -202,7 +202,7 @@ find_stale_bugs_for_keyword() {
                         # this bug also has work to do but needs tweaks
                         # in package list
                         stale_bug=no
-                        warn "BUG: bug=${bug} ${keyword_presence}"
+                        warn "BUG: bug=https://bugs.gentoo.org/${bug} ${keyword_presence}"
                         ;;
                 esac
                 ;;
