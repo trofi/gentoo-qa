@@ -13,8 +13,13 @@
 # After builds are done '<logs_dir>' is cleaned from logs not
 # related to '<todo_list>'.
 #
-# Inplace test:
+# Inplace test1 (gegatoms.py):
 # $ echo -e '# bug #42\n=foo/bar-1' > i
+# $ mkdir -p l
+# $ ./lazy_builder.py i o l
+#
+# Inplace test2 (nattka):
+# $ echo -e '# bug 42 (KEYWORDREQ)\n=foo/bar-1 **  # -> ~ia64' > i
 # $ mkdir -p l
 # $ ./lazy_builder.py i o l
 
@@ -35,13 +40,18 @@ class Spec:
     def get_bug(bug_spec):
         """Parse bug number out of bug spec.
 
-        Example:
+        Examples:
          '# bug #123' -> 123
+         '# bug 677176 (KEYWORDREQ)' -> 677176
         """
         m = re.match('^# bug #(\d+)$', bug_spec.strip())
-        if not m:
-            raise ValueError("Failed to extract bug number from '%s'" % bug_spec)
-        return int(m.group(1))
+        if m:
+            return int(m.group(1))
+        m = re.match('^# bug (\d+) \(KEYWORDREQ\)$', bug_spec.strip())
+        if m:
+            return int(m.group(1))
+
+        raise ValueError("Failed to extract bug number from '%s'" % bug_spec)
 
     def get_atom(atom_spec):
         """Parse atom of atom spec.
