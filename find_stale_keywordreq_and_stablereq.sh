@@ -5,25 +5,23 @@
 
 ARCHES=(
     # stable
-    alpha
     amd64
     arm
     hppa
-    ia64
     ppc
     ppc64
     x86
 
     # unstable
+    alpha
     arm64
+    ia64
     mips
 
     # experimental
     m68k
-    nios2
     riscv
     s390
-    sh
     sparc
 )
 
@@ -37,7 +35,8 @@ DEBUG=no
 VERBOSE=no
 REFRESH_LISTS=yes
 METADATA_ONLY=no
-EXTRA_GETATOM_PARAMS=
+EXTRA_NATTKA_PARAMS=
+EXTRA_NATTKA_APPLY_PARAMS=
 
 parse_opts() {
     for o in "$@"; do
@@ -57,8 +56,11 @@ parse_opts() {
             --only-arches=*)
                 ARCHES=( ${o#--only-arches=} )
                 ;;
-            --getatom-params=*)
-                EXTRA_GETATOM_PARAMS=( ${o#--getatom-params=} )
+            --nattka-params=*)
+                EXTRA_NATTKA_PARAMS=${o#--nattka-params=}
+                ;;
+            --nattka-apply-params=*)
+                EXTRA_NATTKA_APPLY_PARAMS=${o#--nattka-apply-params=}
                 ;;
             *)
                 warn "unknown option '$o'"
@@ -77,13 +79,6 @@ info() {
 
 warn() {
     echo "WARNING: $@" >&2
-}
-
-getatoms() {
-    # --no-depends --no-sanity-check
-    set -- getatoms.py ${EXTRA_GETATOM_PARAMS} "$@"
-    info "$@"
-    "$@" || info "getatoms.py failed. Empty output?"
 }
 
 stable_file() {
@@ -106,8 +101,10 @@ refresh_lists() {
 
     local arch
     for arch in "${ARCHES[@]}"; do
-        getatoms --arch "${arch}" --stablereq  --all-bugs > "$(stable_file "${arch}")" &
-        getatoms --arch "${arch}" --keywordreq --all-bugs > "$(keywords_file "${arch}")" &
+        echo nattka ${EXTRA_NATTKA_PARAMS} apply --stablereq  --arch "${arch}" ${EXTRA_NATTKA_APPLY_PARAMS} -n
+        echo nattka ${EXTRA_NATTKA_PARAMS} apply --keywordreq --arch "${arch}" ${EXTRA_NATTKA_APPLY_PARAMS} -n
+        nattka ${EXTRA_NATTKA_PARAMS} apply --stablereq  --arch "${arch}" ${EXTRA_NATTKA_APPLY_PARAMS} -n > "$(stable_file   "${arch}")" &
+        nattka ${EXTRA_NATTKA_PARAMS} apply --keywordreq --arch "${arch}" ${EXTRA_NATTKA_APPLY_PARAMS} -n > "$(keywords_file "${arch}")" &
     done
     wait
 }
@@ -180,6 +177,11 @@ find_stale_bugs_for_keyword() {
         case "${line}" in
             '# bug #'*)
                 bug=${line#\# bug #}
+                stale_bug=yes
+                ;;
+            '# bug '*)
+                bug=${line#\# bug }
+                bug=${bug// *}
                 stale_bug=yes
                 ;;
             '='*)
