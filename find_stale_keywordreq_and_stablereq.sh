@@ -92,9 +92,10 @@ keywords_file() {
 }
 
 refresh_lists() {
-    # TODO: maybe don't rerun if cache is not too old (+/- a few minutes)
-    #warn "skipping bug refresh"
-    #return 0
+    if [[ $REFRESH_LISTS != yes ]]; then
+        warn "Skip refresh"
+        return 0
+    fi
 
     mkdir -pv "${STABLE_DIR}"
     mkdir -pv "${KEYWORD_DIR}"
@@ -231,7 +232,7 @@ find_stale_bugs() {
 main() {
     parse_opts "$@"
 
-    [[ $REFRESH_LISTS = yes ]] && refresh_lists
+    refresh_lists
 
     find_stale_bugs
 }
