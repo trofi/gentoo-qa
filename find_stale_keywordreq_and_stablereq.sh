@@ -101,8 +101,6 @@ refresh_lists() {
 
     local arch
     for arch in "${ARCHES[@]}"; do
-        echo nattka ${EXTRA_NATTKA_PARAMS} apply --stablereq  --arch "${arch}" ${EXTRA_NATTKA_APPLY_PARAMS} -n
-        echo nattka ${EXTRA_NATTKA_PARAMS} apply --keywordreq --arch "${arch}" ${EXTRA_NATTKA_APPLY_PARAMS} -n
         nattka ${EXTRA_NATTKA_PARAMS} apply --stablereq  --arch "${arch}" ${EXTRA_NATTKA_APPLY_PARAMS} -n > "$(stable_file   "${arch}")" &
         nattka ${EXTRA_NATTKA_PARAMS} apply --keywordreq --arch "${arch}" ${EXTRA_NATTKA_APPLY_PARAMS} -n > "$(keywords_file "${arch}")" &
     done
