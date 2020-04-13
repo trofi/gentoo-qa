@@ -22,6 +22,7 @@ DISABLED_KEYWORDS=(
     DoublePrefixInPath
       # This one is frequently useful
       DroppedKeywords
+      LaggingStable
     DuplicateEclassInherits
     DuplicateFiles
 
@@ -47,6 +48,7 @@ DISABLED_KEYWORDS=(
 
     PotentialGlobalUse
     PotentialLocalUse
+    PotentialStable
     ProbableGlobalUse
 
     RedundantDodir
