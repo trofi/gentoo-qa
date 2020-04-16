@@ -12,6 +12,7 @@ DISABLED_KEYWORDS=(
     AbsoluteSymlink
 
     BadDescription
+    BadFilename
     BannedEapiCommand
 
     DeprecatedEapi
@@ -19,6 +20,7 @@ DISABLED_KEYWORDS=(
     DeprecatedEclass
     DeprecatedInsinto
     DeprecatedPkg
+    DoubleEmptyLine
     DoublePrefixInPath
       # This one is frequently useful
       DroppedKeywords
@@ -31,6 +33,7 @@ DISABLED_KEYWORDS=(
     MatchingChksums
     MissingLicenseRestricts
     MissingPackageRevision
+    MissingPythonEclass
     MissingSlash
     MissingSlotDep
     MissingTestRestrict
@@ -38,7 +41,9 @@ DISABLED_KEYWORDS=(
     MissingUri
     MissingUseDepDefault
     MissingVirtualKeywords
+    MultiMovePackageUpdate
 
+    NoFinalNewline
     NonexistentBlocker
     NonexistentDeps
 
@@ -46,6 +51,8 @@ DISABLED_KEYWORDS=(
     OldGentooCopyright
     OutdatedBlocker
 
+    PkgMetadataXmlEmptyElement
+    PkgMetadataXmlIndentation
     PotentialGlobalUse
     PotentialLocalUse
     PotentialStable
@@ -62,11 +69,14 @@ DISABLED_KEYWORDS=(
     StaticSrcUri
 
     TarballAvailable
+    TrailingEmptyLine
 
     UncheckableDep
+    UnknownManifest
     UnknownProfilePackageUse
     UnknownProfilePackages
     UnknownProfileUse
+    UnknownRestrict
     UnderscoreInUseFlag
     UnnecessarySlashStrip
     UnsortedKeywords
@@ -75,6 +85,7 @@ DISABLED_KEYWORDS=(
     UnusedLicenses
     UnusedProfileDirs
 
+    VariableInHomepage
     VulnerablePackage
 
     WhitespaceFound
