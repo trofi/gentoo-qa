@@ -22,12 +22,18 @@
 # $ echo -e '# bug 42 (KEYWORDREQ)\n=foo/bar-1 **  # -> ~ia64' > i
 # $ mkdir -p l
 # $ ./lazy_builder.py i o l
+#
+# Inplace test3 (empty):
+# $ echo -e '# bug 123 (KEYWORDREQ)\n' > i
+# $ mkdir -p l
+# $ ./lazy_builder.py i o l
 
 import argparse
 import enum
 import os
 import re
 import shlex
+import sys
 
 logs_dir    = 'logs'
 
@@ -263,7 +269,11 @@ def main():
                 # empty file or many newlines
                 if len(task_spec) == 0:
                     continue
-                task = Task(task_spec)
+                try:
+                  task = Task(task_spec)
+                except ValueError as e:
+                  print("ERROR: ", e)
+                  continue
                 result = executor.run(task)
                 if result == Executor.Result.PASS:
                     print("%s\n" % task, file=o)
