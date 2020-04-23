@@ -1,10 +1,17 @@
 #!/bin/bash
 
+# yield CPU to all interactive tasks
+chrt -v --batch --pid 0 $$
+
 # checks for keywords mismatch treewide with pkgcheck
 # I run it as:
 #    ./run_pkgcheck.sh --arches=-x64-macos
 # Or for specific arch as:
 #    ./run_pkgcheck.sh --arches=sparc --profiles=default/linux/sparc/17.0
+# To check tree for consistency a few more checks cn be dropped:
+#    DISABLE_EXTRA_KEYWORDS=DroppedKeywords ./run_pkgcheck.sh --arches=sparc --profiles=default/linux/sparc/17.0
+
+: ${DISABLE_EXTRA_KEYWORDS=}
 
 # Not too critical for now. I'd like to keep only arch-specific warnings.
 DISABLED_KEYWORDS=(
@@ -22,8 +29,6 @@ DISABLED_KEYWORDS=(
     DeprecatedPkg
     DoubleEmptyLine
     DoublePrefixInPath
-      # This one is frequently useful
-      DroppedKeywords
       LaggingStable
     DuplicateEclassInherits
     DuplicateFiles
@@ -89,6 +94,10 @@ DISABLED_KEYWORDS=(
     VulnerablePackage
 
     WhitespaceFound
+)
+
+DISABLED_KEYWORDS+=(
+    ${DISABLE_EXTRA_KEYWORDS}
 )
 
 # -foo,-bar
