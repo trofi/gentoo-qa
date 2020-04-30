@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # yield CPU to all interactive tasks
-chrt -v --batch --pid 0 $$
+chrt --batch --pid 0 $$
 
 # checks for keywords mismatch treewide with pkgcheck
 # I run it as:
