@@ -58,6 +58,7 @@ DISABLED_KEYWORDS=(
 
     PkgMetadataXmlEmptyElement
     PkgMetadataXmlIndentation
+    PkgMetadataXmlInvalidPkgRef
     PotentialGlobalUse
     PotentialLocalUse
     PotentialStable
