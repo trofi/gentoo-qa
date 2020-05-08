@@ -212,7 +212,8 @@ find_stale_bugs_for_keyword() {
                 check_and_report_staleness
                 ;;
             *)
-                warn "failed to interpret '${line}' for $keyword"
+                # mangle line into a link
+                warn "failed to interpret '${line//# bug /# bug https://bugs.gentoo.org/}' for $keyword"
                 ;;
         esac
     done < "${kw_file}"
