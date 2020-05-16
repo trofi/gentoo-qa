@@ -54,7 +54,7 @@ class Spec:
         m = re.match('^# bug #(\d+)$', bug_spec.strip())
         if m:
             return int(m.group(1))
-        m = re.match('^# bug (\d+) \(KEYWORDREQ|STABLEREQ\)$', bug_spec.strip())
+        m = re.match('^# bug (\d+) \((KEYWORDREQ|STABLEREQ)\)( ALLARCHES)?$', bug_spec.strip())
         if m:
             return int(m.group(1))
 
