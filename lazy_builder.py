@@ -49,11 +49,12 @@ class Spec:
         Examples:
          '# bug #123' -> 123
          '# bug 677176 (KEYWORDREQ)' -> 677176
+         '# bug 677176 (STABLEREQ)' -> 677176
         """
         m = re.match('^# bug #(\d+)$', bug_spec.strip())
         if m:
             return int(m.group(1))
-        m = re.match('^# bug (\d+) \(KEYWORDREQ\)$', bug_spec.strip())
+        m = re.match('^# bug (\d+) \(KEYWORDREQ|STABLEREQ\)$', bug_spec.strip())
         if m:
             return int(m.group(1))
 
