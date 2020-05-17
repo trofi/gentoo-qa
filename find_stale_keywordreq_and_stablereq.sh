@@ -178,7 +178,7 @@ find_stale_bugs_for_keyword() {
                 bug=${line#\# bug #}
                 stale_bug=yes
                 ;;
-            '# bug '*' (KEYWORDREQ)'|'# bug '*' (STABLEREQ)'|'# bug '*' (STABLEREQ) ALLARCHES')
+            '# bug '*' (KEYWORDREQ)'|'# bug '*' (KEYWORDREQ) ALLARCHES'|'# bug '*' (STABLEREQ)'|'# bug '*' (STABLEREQ) ALLARCHES')
                 bug=${line#\# bug }
                 bug=${bug// *}
                 stale_bug=yes
