@@ -81,8 +81,9 @@ while read l; do
         bug=${bug_number:+, bug #${bug_number}}
         commitfile=$(mktemp)
         cat >"${commitfile}" <<EOF
-${cat}/${pn}: ${action} ${pv} for ${arch}${bug}
+${cat}/${pn}: ${action} ${pv} for ${arch}
 
+${action} wrt ${bug}
 ${credit:+Tested-by: ${credit}}
 EOF
 
