@@ -76,14 +76,11 @@ while read l; do
     run ekeyword ${kws} "${e}"
     (
         cd ${cat}/${pn}
-        # makes it easier to comment out experimentals occasionally
-        # Append ", bug #<number>" if '${bug_number}' exists
-        bug=${bug_number:+, bug #${bug_number}}
         commitfile=$(mktemp)
         cat >"${commitfile}" <<EOF
 ${cat}/${pn}: ${action} ${pv} for ${arch}
 
-${action} wrt ${bug}
+${action} wrt bug #${bug_number}
 ${credit:+Tested-by: ${credit}}
 EOF
 
