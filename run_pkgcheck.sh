@@ -65,6 +65,8 @@ DISABLED_KEYWORDS=(
     PotentialLocalUse
     PotentialStable
     ProbableGlobalUse
+    PythonMissingDeps
+    PythonMissingRequiredUse
 
     RedundantDodir
     RedundantLongDescription
