@@ -67,6 +67,7 @@ DISABLED_KEYWORDS=(
     ProbableGlobalUse
     PythonMissingDeps
     PythonMissingRequiredUse
+    PythonRuntimeDepInAnyR1
 
     RedundantDodir
     RedundantLongDescription
