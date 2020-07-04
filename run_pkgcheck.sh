@@ -8,7 +8,7 @@ chrt --batch --pid 0 $$
 #    ./run_pkgcheck.sh --arches=-x64-macos
 # Or for specific arch as:
 #    ./run_pkgcheck.sh --arches=sparc --profiles=default/linux/sparc/17.0
-# To check tree for consistency a few more checks cn be dropped:
+# To check tree for consistency a few more checks can be dropped:
 #    DISABLE_EXTRA_KEYWORDS=DroppedKeywords ./run_pkgcheck.sh --arches=sparc --profiles=default/linux/sparc/17.0
 
 : ${DISABLE_EXTRA_KEYWORDS=}
@@ -33,6 +33,7 @@ DISABLED_KEYWORDS=(
     DuplicateEclassInherits
     DuplicateFiles
 
+    EmptyMaintainer
     ExecutableFile
 
     MatchingChksums
@@ -49,6 +50,7 @@ DISABLED_KEYWORDS=(
     MultiMovePackageUpdate
 
     NoFinalNewline
+    NonGentooAuthorsCopyright
     NonexistentBlocker
     NonexistentDeps
 
@@ -72,6 +74,7 @@ DISABLED_KEYWORDS=(
 
     SizeViolation
     StableRequest
+    StaleProxyMaintProject
     StaticSrcUri
 
     TarballAvailable
