@@ -22,11 +22,11 @@ DISABLED_KEYWORDS=(
     BadFilename
     BannedEapiCommand
 
+    DeprecatedDep
     DeprecatedEapi
     DeprecatedEapiCommand
     DeprecatedEclass
     DeprecatedInsinto
-    DeprecatedPkg
     DoubleEmptyLine
     DoublePrefixInPath
       LaggingStable
