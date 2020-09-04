@@ -27,6 +27,10 @@
 # $ echo -e '# bug 123 (KEYWORDREQ)\n' > i
 # $ mkdir -p l
 # $ ./lazy_builder.py i o l
+#
+# I use it as:
+# $ time lazy_builder.py /etc/portage/package.accept_keywords/to-keyword /lazy.result /lazy-logs
+# $ time lazy_builder.py /etc/portage/package.accept_keywords/to-stable /lazy.result /lazy-logs
 
 import argparse
 import enum
