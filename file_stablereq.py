@@ -30,7 +30,7 @@ class Package:
     'StableRequest: version 3.3: slot(0) no change in 62 days for unstable keywords: [ ~amd64, ~x86 ]'
     """
 
-    m = re.search(r'^StableRequest: version (.*): slot\((.*)\) no change in (.*) days for unstable keywords: \[ (.*) \]$', raw_pkgcheck_output)
+    m = re.search(r'^StableRequest: version (.*): slot\((.*)\) no change in (.*) days for unstable keywords?: \[ (.*) \]$', raw_pkgcheck_output)
     [pv, slot, days, raw_arches] = m.group(1,2,3,4)
     skip_chars = {
         '~': ' ',
