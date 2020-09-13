@@ -9,9 +9,9 @@
 : ${DISABLE_EXTRA_KEYWORDS=}
 
 DISABLED_KEYWORDS=(
-    # Full of false positives:
-    #  https://github.com/pkgcore/pkgcheck/issues/230
+    # Some packages will never be stable.
     UnstableOnly
+    # Ongoing stabilizatio
     PotentialStable
 )
 
