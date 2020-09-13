@@ -11,8 +11,10 @@
 DISABLED_KEYWORDS=(
     # Some packages will never be stable.
     UnstableOnly
-    # Ongoing stabilizatio
+    # Some arches will never be stable subset of packages.
     PotentialStable
+    # Ongoing stabilization
+    LaggingStable
 )
 
 DISABLED_KEYWORDS+=(
