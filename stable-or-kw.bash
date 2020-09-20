@@ -31,6 +31,10 @@ while read l; do
         bug_number=${l#\# bug \#}
         continue
     fi
+    if [[ $l == "# bug "* ]]; then
+        bug_number=${l#\# bug }
+        continue
+    fi
     # sticky
     if [[ $l == "# credit: "* ]]; then
         credit=${l#\# credit: }
