@@ -105,14 +105,12 @@ refresh_lists() {
         (
             for i in {1..3}; do
                 sleep $(($RANDOM * 10 / 32767))
-                echo "fetch $arch/$i"
                 nattka ${EXTRA_NATTKA_PARAMS} apply --stablereq  --arch "${arch}" ${EXTRA_NATTKA_APPLY_PARAMS} -n > "$(stable_file   "${arch}")" 2> "$(stable_file   "${arch}")".err && break
             done
         ) &
         (
             for i in {1..3}; do
                 sleep $(($RANDOM * 10 / 32767))
-                echo "fetch ~$arch/$i"
                 nattka ${EXTRA_NATTKA_PARAMS} apply --keywordreq --arch "${arch}" ${EXTRA_NATTKA_APPLY_PARAMS} -n > "$(keywords_file "${arch}")" 2> "$(keywords_file "${arch}")".err && break
             done
         ) &
