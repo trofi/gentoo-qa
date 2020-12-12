@@ -15,6 +15,8 @@ DISABLED_KEYWORDS=(
     PotentialStable
     # Ongoing stabilization
     LaggingStable
+    # Many broken depends
+    NonsolvableDepsInExp
 )
 
 DISABLED_KEYWORDS+=(
@@ -53,4 +55,4 @@ emails=(
 
 IFS=,
 # (foo bar) -> "foo@bentoo.org,bar@gentoo.org"
-portageq --no-regex --no-version --maintainer-email="${emails[*]/%/@gentoo.org}" --repo=${REPO} | xargs --no-run-if-empty pkgcheck scan --keywords="${keywords}" "$@" --repo=gentoo
+ACCEPT_KEYWORDS='**' portageq --no-regex --no-version --maintainer-email="${emails[*]/%/@gentoo.org}" --repo=${REPO} | xargs --no-run-if-empty pkgcheck scan --keywords="${keywords}" --repo=gentoo "$@" --
