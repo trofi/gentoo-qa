@@ -33,10 +33,15 @@ DISABLED_KEYWORDS=(
     DuplicateEclassInherits
     DuplicateFiles
 
+    EclassDocError
+    EclassDocMissingFunc
+    EclassDocMissingVar
+
     ExecutableFile
 
     LiveOnlyPackage
 
+    MaintainerNeeded
     MatchingChksums
     MissingLicenseRestricts
     MissingPackageRevision
