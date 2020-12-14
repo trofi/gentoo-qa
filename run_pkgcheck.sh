@@ -33,8 +33,9 @@ DISABLED_KEYWORDS=(
     DuplicateEclassInherits
     DuplicateFiles
 
-    EmptyMaintainer
     ExecutableFile
+
+    LiveOnlyPackage
 
     MatchingChksums
     MissingLicenseRestricts
@@ -65,6 +66,7 @@ DISABLED_KEYWORDS=(
     PotentialLocalUse
     PotentialStable
     ProbableGlobalUse
+    PythonCompatUpdate
     PythonMissingDeps
     PythonMissingRequiredUse
     PythonRuntimeDepInAnyR1
