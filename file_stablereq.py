@@ -15,7 +15,7 @@
 
 # I use it as:
 #    ### TODO: try '-R FormatReporter --format=' here
-#    $ PROJECTS=slyfox ./run_pkgcheck_for_maintained.sh --keywords=StableRequest | ./file_stablereq.py
+#    $ ./run_pkgcheck_for_maintained.sh --keywords=StableRequest | ./file_stablereq.py
 
 from urllib.parse import urlencode
 import re
@@ -32,27 +32,19 @@ class Package:
 
     m = re.search(r'^StableRequest: version (.*): slot\((.*)\) no change in (.*) days for unstable keywords?: \[ (.*) \]$', raw_pkgcheck_output)
     [pv, slot, days, raw_arches] = m.group(1,2,3,4)
-    skip_chars = {
-        '~': ' ',
-        ',': ' ',
-    }
-    arches = raw_arches.translate(str.maketrans(skip_chars)).split()
 
     p = "%s-%s" % (cpn, pv)
     maintainers = subprocess.check_output("equery m -m =%s | tail -n +1" % p, shell=True).decode('utf-8').strip().split()
 
     self.P           = p
     self.DAYS        = days
-    self.ARCHES      = arches
     self.MAINTAINERS = maintainers
 
 def stablereq_url(package):
-    # TODO: some arches like prefix map to different email aliases
-    all_maintainers = package.MAINTAINERS + ["%s@gentoo.org" % a for a in package.ARCHES]
+    all_maintainers = package.MAINTAINERS
 
     summary = '=%s stabilization' % (package.P)
-    comment = ("In tree for %s days. Let's stabilize =%s for:\n" % (package.DAYS, package.P) +
-               "    " + ' '.join(package.ARCHES))
+    comment = "In tree for %s days. Let's stabilize =%s." % (package.DAYS, package.P)
 
     stabilization_atoms = [package.P]
 
@@ -65,11 +57,11 @@ def stablereq_url(package):
 
         'short_desc':   summary,
         'comment':      comment,
-        'keywords':     'STABLEREQ',
+        'keywords':     'STABLEREQ,CC-ARCHES',
 
         'assigned_to':  all_maintainers[0],
         'cc':           ','.join(all_maintainers[1:]),
-        'cf_stabilisation_atoms': '\n'.join(stabilization_atoms),
+        'cf_stabilisation_atoms': '\n'.join(["%s *" % atom for atom in stabilization_atoms]),
 
         'cf_runtime_testing_required': 'No',
     }
