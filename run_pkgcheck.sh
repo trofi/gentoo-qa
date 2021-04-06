@@ -30,7 +30,6 @@ DISABLED_KEYWORDS=(
     DoubleEmptyLine
     DoublePrefixInPath
       LaggingStable
-    DuplicateEclassInherits
     DuplicateFiles
 
     EclassDocError
@@ -52,7 +51,6 @@ DISABLED_KEYWORDS=(
     MissingUnpackerDep
     MissingUri
     MissingUseDepDefault
-    MissingVirtualKeywords
     MultiMovePackageUpdate
 
     NoFinalNewline
@@ -93,7 +91,6 @@ DISABLED_KEYWORDS=(
     UncheckableDep
     UnknownManifest
     UnknownProfilePackageUse
-    UnknownProfilePackages
     UnknownProfileUse
     UnknownRestrict
     UnderscoreInUseFlag
