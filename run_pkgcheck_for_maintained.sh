@@ -36,6 +36,7 @@ emails=(
     # non-arch projects
     crossdev
     haskell
+    sandbox
     toolchain
 
     # arch projects
