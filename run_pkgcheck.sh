@@ -52,6 +52,7 @@ DISABLED_KEYWORDS=(
     MissingUri
     MissingUseDepDefault
     MultiMovePackageUpdate
+    MultipleKeywordsLines
 
     NoFinalNewline
     NonGentooAuthorsCopyright
@@ -74,11 +75,13 @@ DISABLED_KEYWORDS=(
     PythonMissingRequiredUse
     PythonRuntimeDepInAnyR1
 
+    ReadonlyVariable
     RedundantDodir
     RedundantLongDescription
     RedundantVersion
     RedundantUriRename
     RequiredUseDefaults
+    ReferenceInMetadataVar
 
     SizeViolation
     StableRequest
