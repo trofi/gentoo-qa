@@ -82,7 +82,6 @@ DISABLED_KEYWORDS=(
 
     SizeViolation
     StableRequest
-    StaleProxyMaintProject
     StaticSrcUri
 
     TarballAvailable
@@ -101,7 +100,7 @@ DISABLED_KEYWORDS=(
     UnusedLicenses
     UnusedProfileDirs
 
-    VariableInHomepage
+    VariableScope
     VulnerablePackage
 
     WhitespaceFound
