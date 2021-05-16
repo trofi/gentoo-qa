@@ -91,7 +91,10 @@ DISABLED_KEYWORDS=(
     TrailingEmptyLine
 
     UncheckableDep
+    UnknownCategoryDirs
     UnknownManifest
+    UnknownProfilePackage
+    UnknownProfilePackageKeywords
     UnknownProfilePackageUse
     UnknownProfileUse
     UnknownRestrict
@@ -100,6 +103,8 @@ DISABLED_KEYWORDS=(
     UnsortedKeywords
     UnstableOnly
     UnusedEclasses
+    UnusedGlobalUse
+    UnusedGlobalUseExpand
     UnusedLicenses
     UnusedProfileDirs
 
