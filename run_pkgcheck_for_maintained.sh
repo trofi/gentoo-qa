@@ -37,7 +37,6 @@ emails=(
     crossdev
     haskell
     sandbox
-    toolchain
 
     # arch projects
     hppa
