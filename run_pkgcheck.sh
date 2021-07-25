@@ -18,6 +18,7 @@ DISABLED_KEYWORDS=(
     # up to maintainer to fix, not arch team
     AbsoluteSymlink
 
+    BadDefaultUseFlags
     BadDescription
     BadFilename
     BannedEapiCommand
